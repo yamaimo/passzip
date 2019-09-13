@@ -1,28 +1,20 @@
 # Passzip
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/passzip`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Passzip is a simple tool to zip file with random generated password on macOS.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'passzip'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Use `gem install` as follows:
 
     $ gem install passzip
 
 ## Usage
 
-TODO: Write usage instructions here
+    passzip [-l <passlength>] <target>
+
+Default password length is 10.
+
+An encrypted zip file `<target>.zip` and a password file `<target>.pass` will be created.
 
 ## Development
 
@@ -32,7 +24,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/passzip. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/yamaimo/passzip. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
