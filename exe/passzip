@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "passzip"
+
+filename = ARGV[0]
+password = Passzip.generate_password(10)
+Passzip.zipfile(filename, password)
+puts password
