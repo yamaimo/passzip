@@ -1,8 +1,26 @@
 #!/usr/bin/env ruby
 
-require "passzip"
+require 'passzip'
+require 'optparse'
 
+USAGE = "passzip [-l <passlength>] <target>"
+DefaultPassLength = 10
+
+opts = ARGV.getopts("l:")
 filename = ARGV[0]
-password = Passzip.generate_password(10)
+
+if filename.nil? || filename.empty?
+  STDERR.puts "Target is empty."
+  STDERR.puts USAGE
+  exit 1
+end
+
+passlength = opts["l"].nil? ? DefaultPassLength : opts["l"].to_i
+unless passlength > 0
+  STDERR.puts "Invalid length #{passlength}; Default length #{DefaultPassLength} is used instead."
+  passlength = DefaultPassLength
+end
+
+password = Passzip.generate_password(passlength)
 Passzip.zipfile(filename, password)
-puts password
+Passzip.passfile(filename, password)

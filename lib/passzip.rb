@@ -78,5 +78,12 @@ module Passzip
     end
   end
 
-  module_function :generate_password, :zipfile
+  def passfile(filename, password)
+    passfilename = filename + ".pass"
+    File.open(passfilename, "w") do |file|
+      file.puts password
+    end
+  end
+
+  module_function :generate_password, :zipfile, :passfile
 end
