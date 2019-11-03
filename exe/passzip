@@ -3,10 +3,20 @@
 require 'passzip'
 require 'optparse'
 
-USAGE = "passzip [-l <passlength>] <target>"
+USAGE = <<END_OF_USAGE
+passzip [-l <passlength>] <target>
+  Generate password and encrypt target. (Default password length is 10.)
+passzip -g [-l <passlength>] <target>
+  Generate password only.
+passzip -e <target>
+  Encrypt <target> with passwrod in <target>.pass.
+END_OF_USAGE
 DefaultPassLength = 10
 
-opts = ARGV.getopts("l:")
+opts = ARGV.getopts("l:ge")
+passlength = opts["l"].nil? ? DefaultPassLength : opts["l"].to_i
+generate_only = opts["g"]
+encrypt_only = opts["e"]
 filename = ARGV[0]
 
 if filename.nil? || filename.empty?
@@ -14,13 +24,23 @@ if filename.nil? || filename.empty?
   STDERR.puts USAGE
   exit 1
 end
-
-passlength = opts["l"].nil? ? DefaultPassLength : opts["l"].to_i
+if generate_only && encrypt_only
+  STDERR.puts "Invalid options."
+  STDERR.puts USAGE
+  exit 1
+end
 unless passlength > 0
   STDERR.puts "Invalid length #{passlength}; Default length #{DefaultPassLength} is used instead."
   passlength = DefaultPassLength
 end
 
-password = Passzip.generate_password(passlength)
-Passzip.zipfile(filename, password)
-Passzip.passfile(filename, password)
+generate = !encrypt_only
+encrypt = !generate_only
+
+password = generate ? Passzip.generate_password(passlength) : Passzip.readpass(filename)
+if generate
+  Passzip.passfile(filename, password)
+end
+if encrypt
+  Passzip.zipfile(filename, password)
+end

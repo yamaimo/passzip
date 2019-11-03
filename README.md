@@ -10,11 +10,23 @@ Use `gem install` as follows:
 
 ## Usage
 
+### Generate and encrypt together
+
     passzip [-l <passlength>] <target>
 
 Default password length is 10.
 
 An encrypted zip file `<target>.zip` and a password file `<target>.pass` will be created.
+
+### Generate and encrypt separately
+
+    passzip -g [-l <passlength>] <target>
+
+Generate password only. The password will be written in a file `<target>.pass`.
+
+    passzip -e <target>
+
+Encrypt only. The password in the file `<target>.pass` will be used for encryption.
 
 ## Development
 

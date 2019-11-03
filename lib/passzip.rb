@@ -79,11 +79,26 @@ module Passzip
   end
 
   def passfile(filename, password)
-    passfilename = filename + ".pass"
+    passfilename = get_passfilename(filename)
     File.open(passfilename, "w") do |file|
       file.puts password
     end
   end
 
-  module_function :generate_password, :zipfile, :passfile
+  def readpass(filename)
+    passfilename = get_passfilename(filename)
+    pass = nil
+    File.open(passfilename) do |file|
+      pass = file.readline(chomp: true)
+    end
+    pass
+  end
+
+  module_function :generate_password, :zipfile, :passfile, :readpass
+
+  def self.get_passfilename(filename)
+    filename + ".pass"
+  end
+
+  private_class_method :get_passfilename
 end
